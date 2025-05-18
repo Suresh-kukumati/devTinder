@@ -17,3 +17,7 @@ Diffrence between caret and tilda ( ^ vs ~)
 - Deeply learn http method
 - Install postman app and make workspace/collection > test API call
 - Write logic to handle GET,POST,PATCH, DELETE API calls and test them to postman
+- Explore routing and use of ?, +, (), \* inth routes
+- use of regex in routes /a/, /.\*fly$
+- Reding the query params in the routes
+- Reading the dynmic routes
