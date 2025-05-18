@@ -21,3 +21,10 @@ Diffrence between caret and tilda ( ^ vs ~)
 - use of regex in routes /a/, /.\*fly$
 - Reding the query params in the routes
 - Reading the dynmic routes
+
+- Multiple Route Handlers - Play with Code
+- next()
+- next function and errors along with res.send()
+- app.use(("/route, r1,[r2],r3,[r4,r5]))
+- What is a middleware
+- How expres js basically handle request behind the scenenes
