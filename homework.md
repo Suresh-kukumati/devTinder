@@ -26,5 +26,8 @@ Diffrence between caret and tilda ( ^ vs ~)
 - next()
 - next function and errors along with res.send()
 - app.use(("/route, r1,[r2],r3,[r4,r5]))
-- What is a middleware
-- How expres js basically handle request behind the scenenes
+- What is a middleware ? why do we need it
+- How expres js basically handle request behind the scenenes.
+- Diffrence between app.use and app.all
+- Write a dummy auth middleware for admin
+- Write a dumy auth middlaware for all user routes except /user/login

@@ -1,41 +1,21 @@
 const express = require("express");
 
 const app = express();
+const { authCheck, authUserCheck } = require("./middleware/auth");
 
-// app.use("/test", (req, res) => {
-//   res.send("Hi i am server with new");
-// });
+app.use("/admin", authCheck);
 
-app.get(
-  "/user",
-  [
-    (req, res, next) => {
-      console.log("Handling first user");
-      // res.send("I am the response of first user");
-      next();
-    },
-    (req, res, next) => {
-      console.log("Handling second user");
-      // res.send("I am the response of Second user");
-      next();
-    },
-  ],
-  (req, res, next) => {
-    console.log("Handling Third user");
-    // res.send("I am the response of Third user");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Handling Fourth user");
-    // res.send("I am the response of Fourth user");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Handling Fifth user");
-    res.send("I am the response of Fifth user");
-    // next();
-  }
-);
+app.use("/user", authUserCheck, (req, res) => {
+  res.send("User created");
+});
+
+app.use("/admin/created", (req, res) => {
+  res.send("Admin created");
+});
+
+app.use("/admin/deleted", (req, res) => {
+  res.send("Admin deleted");
+});
 
 app.listen(3000, () => {
   console.log("server is listening");
