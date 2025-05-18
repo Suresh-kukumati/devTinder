@@ -5,8 +5,25 @@ const { authCheck, authUserCheck } = require("./middleware/auth");
 
 app.use("/admin", authCheck);
 
-app.use("/user", authUserCheck, (req, res) => {
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
+app.use("/user", (req, res) => {
+  // try {
+  throw new Error("User mismatched");
   res.send("User created");
+  // } catch (e) {
+  //   res.status(500).send("Something went wrong, contact Admin");
+  // }
+});
+
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Something went wrong with default route");
+  }
 });
 
 app.use("/admin/created", (req, res) => {

@@ -31,3 +31,4 @@ Diffrence between caret and tilda ( ^ vs ~)
 - Diffrence between app.use and app.all
 - Write a dummy auth middleware for admin
 - Write a dumy auth middlaware for all user routes except /user/login
+- Error handling using app.use("/",(err,req,res,next) => {})
