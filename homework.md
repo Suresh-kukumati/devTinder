@@ -12,3 +12,8 @@ Diffrence between caret and tilda ( ^ vs ~)
 - Intialize git
 - .gitIgnore
 - Creatre a remote repo on github.com
+- Play with routes and route extenstions ex. /hello , / , hello/2 , /xyz
+- Order of the routes matter a lot
+- Deeply learn http method
+- Install postman app and make workspace/collection > test API call
+- Write logic to handle GET,POST,PATCH, DELETE API calls and test them to postman
