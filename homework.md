@@ -32,4 +32,12 @@ Diffrence between caret and tilda ( ^ vs ~)
 - Write a dummy auth middleware for admin
 - Write a dumy auth middlaware for all user routes except /user/login
 - Error handling using app.use("/",(err,req,res,next) => {})
-- testing msg
+
+- Create free clustor on Mongodb official website (Mongo Atlas )
+- Install Mongoose library
+- Connect your application to teh Database "Connection-url"/devtinder
+- call the connect DB function and connect to database before starting applocation on 7777
+- Create a userSchema and user Model
+- create a POST /signup API to add data to database
+- Push some documents using API calls from postman
+- Error Hnadling using try , catch
