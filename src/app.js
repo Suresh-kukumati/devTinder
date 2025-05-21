@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/database");
+const User = require("./models/user");
 
 const app = express();
 
@@ -11,5 +12,21 @@ connectDB()
     });
   })
   .catch(() => {
-    console.log("DB connection is failds");
+    console.error("DB connection is failds");
   });
+
+app.post("/signup", async (req, res) => {
+  try {
+    const userData = new User({
+      firstName: "Rajesh K",
+      lastName: "K",
+      emailId: "Rajesh@gmail.com",
+      password: "Pass@1234567890",
+    });
+
+    await userData.save();
+    res.send("User Created successfully");
+  } catch (e) {
+    res.status(400).send("User creation failed");
+  }
+});

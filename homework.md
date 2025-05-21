@@ -41,3 +41,7 @@ Diffrence between caret and tilda ( ^ vs ~)
 - create a POST /signup API to add data to database
 - Push some documents using API calls from postman
 - Error Hnadling using try , catch
+
+- JS object() vs JSON ( Diffrences)
+- Add the express.json middleware to your app
+- Make your signup API dynamic to receive data from end user
