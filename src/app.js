@@ -31,3 +31,23 @@ app.post("/signup", async (req, res) => {
     res.status(400).send("User creation failed");
   }
 });
+
+app.get("/user", async (req, res) => {
+  // const user = await User.find(req.body);
+  const user = await User.findOne(req.body);
+
+  if (!user) {
+    res.status(404).send("User not found");
+  }
+  res.send(user);
+});
+
+app.get("/feed", async (req, res) => {
+  const feedUsers = await User.find({});
+
+  if (!feedUsers.length) {
+    res.status(400).send("Unable to find users");
+  }
+
+  res.send(feedUsers);
+});
