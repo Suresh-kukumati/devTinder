@@ -28,7 +28,7 @@ app.post("/signup", async (req, res) => {
     await userData.save();
     res.send("User Created successfully");
   } catch (e) {
-    res.status(400).send("User creation failed");
+    res.status(400).send("User creation failed" + e);
   }
 });
 
@@ -50,4 +50,18 @@ app.get("/feed", async (req, res) => {
   }
 
   res.send(feedUsers);
+});
+
+app.patch("/update", async (req, res) => {
+  try {
+    const data = req.body;
+    const userId = data.userId;
+    const updateData = await User.findOneAndUpdate({ _id: userId }, data, {
+      runValidators: true,
+    });
+    console.log(updateData);
+    res.send("Data updated successfully");
+  } catch (e) {
+    res.status(500).send(e);
+  }
 });
