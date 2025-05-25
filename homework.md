@@ -5,7 +5,7 @@ install express
 Create a server
 Listen to port 7777
 Write request handler for /test, /hello
-Install nodemon and update scripts inside package.jsonWhat are dependencies
+Install nodemon and update scripts inside package.json What are dependencies
 What ais the use of "-g" while npm install
 Diffrence between caret and tilda ( ^ vs ~)
 
@@ -83,3 +83,5 @@ Diffrence between caret and tilda ( ^ vs ~)
 - userAuth Middleware
 - Add the userAuth middle ware in profile API and a new sendConnectionRequest API
 - Set the expiry of JWT token and cookies to 7 days
+- Create userSchema method to getJWT()
+- Create UserSchema method to comparepassword(passwordInputByUser)
