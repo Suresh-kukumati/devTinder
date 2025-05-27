@@ -70,7 +70,7 @@ Diffrence between caret and tilda ( ^ vs ~)
 
 - Validate data in Signup API
 - Install bcrypt package
-- Create PasswordHash using bcrypt.hash & save the user is excrupted password
+- Create PasswordHash using bcrypt.hash & save the user is encrypted password
 - Create login API
 - Compare passwords and throw errors if email or password is invalid
 
@@ -85,3 +85,17 @@ Diffrence between caret and tilda ( ^ vs ~)
 - Set the expiry of JWT token and cookies to 7 days
 - Create userSchema method to getJWT()
 - Create UserSchema method to comparepassword(passwordInputByUser)
+
+///////////////////////////////////////////////////////////////////
+
+- Explore tinder APIs
+- Create a list all API you can think of in Dev Tinder
+- Group multiple routes under repective routers (API md file)
+- Read documentation for express.Router
+- Create routes folder for managing auth,profile, request routers
+- create authRouter, profileRouter, requestRouter
+- Import these routers in app.js
+- Create POST /logout API
+- Create PATCH /profile/edit
+- Create PATCH /profile/password API => forgot password API
+- Make you validate all data in every POST, PATCH apis
