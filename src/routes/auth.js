@@ -21,7 +21,6 @@ authRouter.post("/signup", async (req, res) => {
 
     //Bcrypt password
     const hashPassword = await bcrypt.hash(password, 10);
-
     const user = {
       firstName,
       lastName,
@@ -30,72 +29,10 @@ authRouter.post("/signup", async (req, res) => {
     };
 
     const userData = new User(user);
-    // const userData = new User({
-    //   firstName: "Rajesh K",
-    //   lastName: "K",
-    //   emailId: "Rajesh@gmail.com",
-    //   password: "Pass@1234567890",
-    // });
-
     await userData.save();
     res.send("User Created successfully");
   } catch (e) {
     res.status(400).send("ERROR: " + e.message);
-  }
-});
-
-authRouter.get("/user", async (req, res) => {
-  // const user = await User.find(req.body);
-  const user = await User.findOne(req.body);
-
-  if (!user) {
-    res.status(404).send("User not found");
-  }
-  res.send(user);
-});
-
-authRouter.get("/feed", async (req, res) => {
-  const feedUsers = await User.find({});
-
-  if (!feedUsers.length) {
-    res.status(400).send("Unable to find users");
-  }
-
-  res.send(feedUsers);
-});
-
-authRouter.patch("/update/:userId", async (req, res) => {
-  try {
-    const data = req.body;
-    const userId = req.params?.userId;
-
-    const ALLOW_UPDATE_FIELDS = ["firstName", "test"];
-
-    // const isUpdateAllowed = Object.keys(data).every((k) => {
-    //   return ALLOW_UPDATE_FIELDS.includes(k);
-    // });
-
-    const isUpdateAllowed = Object.keys(data).every((k) =>
-      ALLOW_UPDATE_FIELDS.includes(k)
-    );
-    // console.log(isUpdateAllowed);
-    if (!isUpdateAllowed) {
-      throw new Error("Fields are not allowed for Update 1");
-    }
-    const testArray = data.test;
-    console.log(testArray);
-
-    if (testArray.length > 10) {
-      throw new Error("`test` field length is very high");
-    }
-
-    const updateData = await User.findOneAndUpdate({ _id: userId }, data, {
-      runValidators: true,
-    });
-    console.log(updateData);
-    res.send("Data updated successfully");
-  } catch (e) {
-    res.status(500).send(e.message);
   }
 });
 
@@ -119,7 +56,9 @@ authRouter.post("/login", async (req, res) => {
     if (validateUser) {
       const token = await user.getJWT();
       if (token) {
-        res.cookie("token", token, { expiresIn: "7d" });
+        res.cookie("token", token, {
+          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        });
         res.send("User logged in successfully");
       } else {
         throw new Error("something wrong with token, please try again");
@@ -130,6 +69,11 @@ authRouter.post("/login", async (req, res) => {
   } catch (e) {
     res.status(400).send("ERROR: " + e.message);
   }
+});
+
+authRouter.post("/logout", (req, res) => {
+  res.cookie("token", "", { expiresIn: new Date(Date.now()) });
+  res.send("User log out successfully");
 });
 
 module.exports = authRouter;

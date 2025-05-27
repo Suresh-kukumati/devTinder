@@ -41,11 +41,16 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-    desc: {
+    about: {
       type: String,
       default: "Hi i am mong testing",
     },
-    test: {
+    photos: {
+      type: String,
+      default:
+        "https://t3.ftcdn.net/jpg/03/13/42/46/360_F_313424630_Uja1TnjdFhdz0bdbFnhMRuBTSIw25TWQ.jpg",
+    },
+    skills: {
       type: Array,
     },
   },
@@ -55,7 +60,7 @@ const userSchema = mongoose.Schema(
 userSchema.methods.getJWT = async function () {
   const user = this;
   const token = await jwt.sign({ _id: user._id }, "tokenFirstWithNew", {
-    expiresIn: "7d",
+    expiresIn: "1h",
   });
   return token;
 };

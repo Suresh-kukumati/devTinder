@@ -6,15 +6,17 @@ const userAuth = async (req, res, next) => {
     const cookies = req.cookies;
 
     if (!cookies) {
-      throw new Error("Token is expired first");
+      throw new Error("Token is expired");
     }
 
     const { token } = cookies;
-    // console.log(token);
+    if (!token) {
+      throw new Error("Token is expired");
+    }
     const decoded = await jwt.verify(token, "tokenFirstWithNew");
 
     if (!decoded) {
-      throw new Error("Token is expired");
+      throw new Error("Token is expired, please try again");
     }
 
     const { _id } = decoded;

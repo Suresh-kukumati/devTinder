@@ -21,4 +21,38 @@ const validateLoginData = (req) => {
   }
 };
 
-module.exports = { validateSignUpData, validateLoginData };
+const validateEditProfileData = (req) => {
+  const allowUpdateFields = [
+    "firstName",
+    "lastName",
+    "emailId",
+    "desc",
+    "photos",
+    "skills",
+    "gender",
+    "about",
+  ];
+
+  const isEditAllowed = Object.keys(req.body).every((field) =>
+    allowUpdateFields.includes(field)
+  );
+
+  return isEditAllowed;
+};
+
+const validateForgotPasswordData = (req) => {
+  const allowUpdateFields = ["oldPassword", "newPassword"];
+
+  const isEditAllowed = Object.keys(req.body).every((fields) =>
+    allowUpdateFields.includes(fields)
+  );
+
+  return isEditAllowed;
+};
+
+module.exports = {
+  validateSignUpData,
+  validateLoginData,
+  validateEditProfileData,
+  validateForgotPasswordData,
+};
