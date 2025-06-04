@@ -6,7 +6,6 @@ const {
   validateEditProfileData,
   validateForgotPasswordData,
 } = require("../utils/validation");
-const { hash } = require("bcrypt");
 
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
   try {

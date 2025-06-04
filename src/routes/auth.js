@@ -28,7 +28,7 @@ authRouter.post("/signup", async (req, res) => {
       password: hashPassword,
     };
 
-    const userData = new User(user);
+    const userData = await new User(user);
     await userData.save();
     res.send("User Created successfully");
   } catch (e) {

@@ -28,7 +28,7 @@ requestRouter.post(
           .send({ message: "sending to connection user is mismatch" });
       }
 
-      const existConnectionRequest = await Connectionrequest.find({
+      const existConnectionRequest = await Connectionrequest.findOne({
         $or: [
           { fromUserId, toUserId },
           { fromUserId: toUserId, toUserId: fromUserId },
@@ -37,7 +37,7 @@ requestRouter.post(
 
       // console.log(existConnectionRequest);
 
-      if (existConnectionRequest.length > 0) {
+      if (existConnectionRequest) {
         return res
           .status(400)
           .json({ message: "Connection is already exists" });
@@ -52,6 +52,42 @@ requestRouter.post(
       await connection.save();
 
       res.send("Connection send successfully");
+    } catch (e) {
+      res.status(400).send("Error: " + e.message);
+    }
+  }
+);
+
+requestRouter.post(
+  "/request/review/:status/:requestId",
+  userAuth,
+  async (req, res) => {
+    try {
+      const { status, requestId } = req.params;
+      const loggedInUser = req.user;
+
+      const allowedRequestStatus = ["accepted", "rejected"];
+
+      if (!allowedRequestStatus.includes(status)) {
+        return res.status(400).json({ message: "Invalid status send" });
+      }
+
+      const connectionData = await Connectionrequest.findOne({
+        _id: requestId,
+        toUserId: loggedInUser._id,
+        status: "interested",
+      });
+
+      if (!connectionData) {
+        return res.status(400).json({ message: "Connection not found" });
+      }
+
+      connectionData.status = status;
+      const data = await connectionData.save();
+      res.json({
+        message: `connection request ${status} successfully`,
+        data,
+      });
     } catch (e) {
       res.status(400).send("Error: " + e.message);
     }
