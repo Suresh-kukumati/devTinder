@@ -57,9 +57,13 @@ authRouter.post("/login", async (req, res) => {
       const token = await user.getJWT();
       if (token) {
         res.cookie("token", token, {
-          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          expires: new Date(Date.now() + 8 * 3600000),
         });
-        res.send("User logged in successfully");
+        res.json({
+          message: "User logged in successfully!",
+          data: user,
+          error: null,
+        });
       } else {
         throw new Error("something wrong with token, please try again");
       }
@@ -67,7 +71,11 @@ authRouter.post("/login", async (req, res) => {
       throw new Error("User credential is mismatched");
     }
   } catch (e) {
-    res.status(400).send("ERROR: " + e.message);
+    res.status(400).json({
+      message: "Failed to login",
+      data: [],
+      error: e.message,
+    });
   }
 });
 
