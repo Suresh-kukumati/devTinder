@@ -20,7 +20,7 @@ requestRouter.post(
 
       const verifyToUser = await User.findById(toUserId);
 
-      console.log(verifyToUser);
+      // console.log(verifyToUser);
 
       if (!verifyToUser) {
         return res
@@ -49,11 +49,21 @@ requestRouter.post(
         status,
       });
 
-      await connection.save();
+      const data = await connection.save();
+
+      res.json({
+        message: "Connection send successfully",
+        data,
+        error: null,
+      });
 
       res.send("Connection send successfully");
-    } catch (e) {
-      res.status(400).send("Error: " + e.message);
+    } catch (err) {
+      res.status(400).json({
+        message: "Failed to connect the request",
+        data: [],
+        error: err.message,
+      });
     }
   }
 );
@@ -87,8 +97,14 @@ requestRouter.post(
       res.json({
         message: `connection request ${status} successfully`,
         data,
+        error: null,
       });
-    } catch (e) {
+    } catch (err) {
+      res.status(400).json({
+        message: "Something went wrong",
+        data: [],
+        error: err.message,
+      });
       res.status(400).send("Error: " + e.message);
     }
   }

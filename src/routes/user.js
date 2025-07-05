@@ -1,5 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
+const User = require("../models/user");
 const Connectionrequest = require("../models/connectionRequest");
 const { userAuth } = require("../middleware/auth");
 const USER_STATIC_FIELD = "firstName lastName age gender about photos skills";
@@ -34,7 +35,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 
     const data = connectionRequests.map((conn) => {
       if (conn.fromUserId._id.toString() === user._id.toString()) {
-        console.log("success");
+        // console.log("success");
         return conn.toUserId;
       }
       return conn.fromUserId;
@@ -44,7 +45,11 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       data: data,
     });
   } catch (e) {
-    res.status(400).send("Error: " + e.message);
+    res.status(400).json({
+      message: "Failed to fetch connections",
+      data: [],
+      error: e.message,
+    });
   }
 });
 
@@ -72,7 +77,7 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
         { _id: { $ne: loggedInUser._id } },
       ],
     })
-      .select(USER_STATIC_FIELDS)
+      .select(USER_STATIC_FIELD)
       .skip(skip)
       .limit(limit);
 

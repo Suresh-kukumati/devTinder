@@ -6,17 +6,23 @@ const userAuth = async (req, res, next) => {
     const cookies = req.cookies;
 
     if (!cookies) {
-      throw new Error("Token is expired");
+      res
+        .status(401)
+        .json({ message: "Unauthenticated user", data: [], error: null });
     }
 
     const { token } = cookies;
     if (!token) {
-      throw new Error("Token is expired");
+      res
+        .status(401)
+        .json({ message: "Unauthenticated user", data: [], error: null });
     }
     const decoded = await jwt.verify(token, "tokenFirstWithNew");
 
     if (!decoded) {
-      throw new Error("Token is expired, please try again");
+      res
+        .status(401)
+        .json({ message: "Unauthenticated user", data: [], error: null });
     }
 
     const { _id } = decoded;
@@ -28,7 +34,7 @@ const userAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (e) {
-    res.status(400).send("ERROR: " + e.message);
+    res.status(400).json({ message: "Error", data: [], error: e.message });
   }
 };
 

@@ -10,7 +10,11 @@ const {
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
   try {
     const user = req.user;
-    res.send(user);
+    res.json({
+      message: "Data fetched successfully",
+      data: user,
+      error: null,
+    });
   } catch (e) {
     res.status(400).send("ERROR: " + e.message);
   }
@@ -18,12 +22,15 @@ profileRouter.get("/profile/view", userAuth, async (req, res) => {
 
 profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
   try {
+    if (!req.body || typeof req.body !== "object") {
+      throw new Error("Request body is missing or invalid");
+    }
+
     if (!validateEditProfileData(req)) {
       throw new Error("Fields are not valid");
     }
 
     const loggedInUser = req.user;
-
     // console.log(loggedInUser);
 
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
@@ -36,9 +43,12 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
       message: `${loggedInUser.firstName} details updated successfully`,
       data: loggedInUser,
     });
-    res.send();
   } catch (e) {
-    res.status(400).send("Error: " + e.message);
+    res.status(400).json({
+      message: "something went wrong",
+      data: [],
+      error: e.message,
+    });
   }
 });
 

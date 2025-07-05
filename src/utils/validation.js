@@ -22,12 +22,18 @@ const validateLoginData = (req) => {
 };
 
 const validateEditProfileData = (req) => {
+  if (
+    !req ||
+    typeof req.body !== "object" ||
+    Object.keys(req.body).length === 0
+  ) {
+    return false;
+  }
   const allowUpdateFields = [
     "firstName",
     "lastName",
-    "emailId",
-    "desc",
     "photos",
+    "age",
     "skills",
     "gender",
     "about",
