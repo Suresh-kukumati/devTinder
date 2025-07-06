@@ -32,18 +32,50 @@ authRouter.post("/signup", async (req, res) => {
 
     //Bcrypt password
     const hashPassword = await bcrypt.hash(password, 10);
-    const user = {
+    const userData = {
       firstName,
       lastName,
       emailId,
       password: hashPassword,
     };
 
-    const userData = await new User(user);
-    await userData.save();
-    res.send("User Created successfully");
-  } catch (e) {
-    res.status(400).send("ERROR: " + e.message);
+    const user = await new User(userData);
+    await user.save();
+
+    const token = await user.getJWT();
+
+    if (token) {
+      res.cookie("token", token, {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      const data = user.toObject();
+      delete data.password;
+
+      res.json({
+        message: "User Created successfully",
+        data,
+        error: null,
+      });
+    } else {
+      throw new Error("something wrong with token, please try again");
+    }
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({
+        message: "Failed to register",
+        data: [],
+        error: "Email already exists",
+      });
+    }
+    res.status(400).json({
+      message: "Failed to Register",
+      data: [],
+      error: err.message,
+    });
   }
 });
 
@@ -85,11 +117,11 @@ authRouter.post("/login", loginLimiter, async (req, res) => {
     } else {
       throw new Error("User credential is mismatched");
     }
-  } catch (e) {
+  } catch (err) {
     res.status(400).json({
       message: "Failed to login",
       data: [],
-      error: e.message,
+      error: err.message,
     });
   }
 });

@@ -56,8 +56,6 @@ requestRouter.post(
         data,
         error: null,
       });
-
-      res.send("Connection send successfully");
     } catch (err) {
       res.status(400).json({
         message: "Failed to connect the request",
