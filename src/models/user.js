@@ -8,14 +8,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       minLength: 4,
-      lowercase: true,
       trim: true,
     },
     lastName: {
       type: String,
       required: true,
       minLength: 4,
-      lowercase: true,
     },
     emailId: {
       type: String,
