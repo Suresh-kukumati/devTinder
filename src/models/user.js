@@ -70,5 +70,5 @@ userSchema.methods.validateHashPassword = async function (password) {
   return validateUser;
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 module.exports = User;
