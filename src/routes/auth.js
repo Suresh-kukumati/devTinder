@@ -8,8 +8,10 @@ const rateLimt = require("express-rate-limit");
 const loginLimiter = rateLimt({
   windowMs: 15 * 60 * 1000,
   max: 5,
-  message:
-    "Too many login attempts from this IP, please try again after 15 minutes",
+  message: {
+    message:
+      "Too many login attempts from this IP, please try again after 15 minutes",
+  },
   standardHeaders: true, //Ratelimit-Limit,Ratelimit-Remaining,Ratelimit-Reset
   legacyHeaders: true, //legacyHeaders: Controls whether to send the old headers (X-RateLimit-*),
   // Setting to false avoids duplication if you're using only standard headers.
