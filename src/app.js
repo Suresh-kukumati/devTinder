@@ -11,6 +11,7 @@ const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 const ExpressError = require("./utils/ExpressError");
 const helmet = require("helmet");
+require("dotenv").config();
 
 // app.use(helmet());
 
@@ -28,12 +29,12 @@ app.use("/", userRouter);
 connectDB()
   .then(() => {
     console.log("DB connection is successfully");
-    app.listen(3000, () => {
-      console.log("server is listening 3000");
+    app.listen(process.env.PORT, () => {
+      console.log("server is running on port 3000");
     });
   })
   .catch(() => {
-    console.error("DB connection is failds");
+    console.error("DB connection is faild");
   });
 
 app.all("/{*any}", (req, res, next) => {
